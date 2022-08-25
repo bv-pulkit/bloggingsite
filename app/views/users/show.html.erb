@@ -1,0 +1,30 @@
+<h1>User</h1>
+<p><%= @user.email %></p>
+
+<h2>Article</h2>
+<% @user.articles.each do |article| %>
+	<li><%= link_to article.title, user_article_path(@user,article) %></li>
+	<p>
+	<strong>Title:</strong>
+	<%= article.title %>
+	</p>
+	<p>
+	<strong>Body:</strong>
+	<%= article.body %>
+	</p>
+<% end %>
+
+<h2>Add an Article</h2>
+<%= form_with model: [ @user, @user.articles.build ] do |form| %>
+	<p>
+	<%= form.label :title %><br>
+	<%= form.text_field :title %>
+	</p>
+	<p>
+	<%= form.label :body %><br>
+	<%= form.text_area :body %>
+	</p>
+	<p>
+	<%= form.submit %>
+	</p>
+<% end %>

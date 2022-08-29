@@ -1,14 +1,14 @@
-<%= form_with model: [ @user, @user.articles.find(params[:id]) ] do |form| %>
-  <div>
-    <%= form.label :title %><br>
-    <%= form.text_field :title %>
-  </div>
+<%= form_with model: [@user, @user.articles.find(params[:id])] do |form| %>
+	<div>
+		<%= form.label :title %><br>
+		<%= form.text_field :title %>
+	</div>
 
-  <div>
-    <%= form.label :body %><br>
-    <%= form.text_area :body %><br>
-  </div>
-  <div>
-    <%= form.submit %>
-  </div>
+	<div>
+		<%= form.label :body %><br>
+		<%= form.text_area :body %><br>
+	</div>
+	<div>
+		<%= form.submit %>
+	</div>
 <% end %>

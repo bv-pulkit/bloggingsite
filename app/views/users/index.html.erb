@@ -1,8 +1,8 @@
 <h1>This is the home page</h1>
 <ul>
-  <% @users.each do |user| %>
-    <li>
-      <%= link_to user.email,user %>
-    </li>
-  <% end %>
+	<% @users.each do |user| %>
+		<li>
+			<%= link_to user.email, user %>
+		</li>
+	<% end %>
 </ul>

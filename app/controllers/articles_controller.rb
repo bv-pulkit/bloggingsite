@@ -1,22 +1,24 @@
 class ArticlesController < ApplicationController
+	before_action :load_user
+	before_action :load_article, except: [:index, :new, :create]
+
 	def index
-		@articles = Article.all
+		@articles = @user.articles if @user
+		user_not_exists
 	end
 
 	def show
-		@user = User.find(params[:user_id])
-		@article = @user.articles.find(params[:id])
+		article_not_exists
 	end
 
 	def new
 		@article = Article.new
+		user_not_exists
 	end
 
 	def create
-		@user = User.find(params[:user_id])
 		@article = @user.articles.new(article_params)
-
-		if @article.save
+		if @article.save!
 			redirect_to user_path(@user)
 		else
 			render :new, status: :unprocessable_entity
@@ -24,15 +26,11 @@ class ArticlesController < ApplicationController
 	end
 
 	def edit
-		@user = User.find(params[:user_id])
-		@article = @user.articles.find(params[:id])
+		article_not_exists
 	end
 
 	def update
-		@user = User.find(params[:user_id])
-		@article = @user.articles.find(params[:id])
-
-		if @article.update(article_params)
+		if @article.update!(article_params)
 			redirect_to user_path(@user)
 		else
 			render :edit, status: :unprocessable_entity
@@ -40,16 +38,29 @@ class ArticlesController < ApplicationController
 	end
 
 	def destroy
-		@user = User.find(params[:user_id])
-		@article = @user.articles.find(params[:id])
-		puts "ready to destroy"
-		@article.destroy
-
+		@article.destroy!
 		redirect_to user_path(@user), status: :see_other;
 	end
 
 	private 
 	def article_params
 		params.require(:article).permit(:title, :body)
+	end
+	
+	def load_user
+		@user = User.where(:id => params[:user_id]).last
+	end
+
+	def load_article
+		@article = @user.articles.where(:id => params[:id]).last if @user
+		user_not_exists
+	end
+
+	def article_not_exists
+		redirect_to new_user_article_path, notice:"Article dont Exist, Create new one" if @article.nil?
+	end
+
+	def user_not_exists
+		redirect_to new_user_path, notice: "User does not exist. Please Sign Up" if @user.nil?
 	end
 end

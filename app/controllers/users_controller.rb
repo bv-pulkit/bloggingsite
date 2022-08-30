@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
 	def index
 		@users = User.all
+		user_exist_check(@users)
 	end
 
 	def new
@@ -17,11 +18,16 @@ class UsersController < ApplicationController
 	end
 
 	def show
-		@user = User.find(params[:id])
+		@user = User.where(:id => params[:id]).last
+		user_exist_check(@user)
 	end
 
 	private
 	def user_params
 		params.require(:user).permit(:email, :password, :password_confirmation)
+	end
+
+	def user_exist_check(user)
+      redirect_to new_user_path, notice: "User does not exist. Please Sign Up" if user.nil?
 	end
 end

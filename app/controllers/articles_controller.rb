@@ -3,17 +3,14 @@ class ArticlesController < ApplicationController
 	before_action :load_article, except: [:index, :new, :create]
 
 	def index
-		@articles = @user.articles if @user
-		user_not_exists
+		@articles = @user.articles
 	end
 
 	def show
-		article_not_exists
 	end
 
 	def new
 		@article = Article.new
-		user_not_exists
 	end
 
 	def create
@@ -26,7 +23,6 @@ class ArticlesController < ApplicationController
 	end
 
 	def edit
-		article_not_exists
 	end
 
 	def update
@@ -49,18 +45,21 @@ class ArticlesController < ApplicationController
 	
 	def load_user
 		@user = User.where(:id => params[:user_id]).last
+		user_not_exists if !@user.present?
 	end
 
 	def load_article
 		@article = @user.articles.where(:id => params[:id]).last if @user
-		user_not_exists
+		article_not_exists if !@article.present?
 	end
 
 	def article_not_exists
-		redirect_to new_user_article_path, notice:"Article dont Exist, Create new one" if @article.nil?
+		redirect_to new_user_article_path, notice:"Article dont Exist, Create new one"
+		return false 
 	end
 
 	def user_not_exists
-		redirect_to new_user_path, notice: "User does not exist. Please Sign Up" if @user.nil?
+		redirect_to new_user_path, notice: "User does not exist. Please Sign Up"
+		return false 
 	end
 end

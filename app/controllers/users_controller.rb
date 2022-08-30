@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 	def index
 		@users = User.all
-		user_exist_check(@users)
+		user_exist_check if !@users.present?
 	end
 
 	def new

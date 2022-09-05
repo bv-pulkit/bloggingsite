@@ -1,12 +1,14 @@
 class ArticlesController < ApplicationController
-	before_action :load_user
-	before_action :load_article, except: [:index, :new, :create]
+	before_action :load_user, except: :show
+	before_action :load_article, except: [:index, :new, :create, :show]
 
 	def index
 		@articles = @user.articles
 	end
 
 	def show
+		@article = Article.where(:id => params[:id]).last
+		article_not_exists if !@article.present?
 	end
 
 	def new
@@ -54,7 +56,7 @@ class ArticlesController < ApplicationController
 	end
 
 	def article_not_exists
-		redirect_to new_user_article_path, notice:"Article dont Exist, Create new one"
+		redirect_to new_user_article_path(current_user), notice:"Article dont Exist, Create new one"
 		return false 
 	end
 

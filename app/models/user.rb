@@ -1,6 +1,7 @@
 class User < ApplicationRecord
 	has_many :articles
-	has_secure_password
-
-	validates :email, presence: true, format: {with: /\A[^@\s]+@[^@\s]+\z/, message: "must be a valid Email Address"}
+	# Include default devise modules. Others available are:
+	# :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+	devise :database_authenticatable, :registerable,
+		:recoverable, :rememberable, :validatable
 end

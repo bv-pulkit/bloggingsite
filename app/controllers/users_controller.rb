@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 	def index
 		@users = User.all
-		user_exist_check if !@users.present?
+		#user_exist_check if !@users.present?
 	end
 
 	def new
@@ -28,6 +28,7 @@ class UsersController < ApplicationController
 	end
 
 	def user_exist_check(user)
-      redirect_to new_user_path, notice: "User does not exist. Please Sign Up" if user.nil?
+		redirect_to new_user_path, notice: "User does not exist. Please Sign Up" if user.nil?
+		return false
 	end
 end

@@ -1,0 +1,12 @@
+<% name = current_user.present? ? current_user.email : 'Stranger' %>
+
+<h1>Welcome, <%= name %></h1>
+<p>Welcome to the blogging site.</p>
+
+<h2>Articles</h2>
+<ul>
+	<% @articles = Article.all %>
+	<% @articles.each do |article| %>
+		<%= link_to article.title, article %><p></p>
+	<% end %>
+</ul>

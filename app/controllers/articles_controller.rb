@@ -6,15 +6,13 @@ class ArticlesController < ApplicationController
 		@articles = @user.articles
 	end
 
-	def show
-	end
-
 	def new
 		@article = Article.new
 	end
 
 	def create
-		@article = @user.articles.new(article_params)
+		secure_params = { "title" => article_params[:title], "body" => article_params[:body] }
+		@article = @user.articles.new(secure_params)
 		if @article.save!
 			redirect_to user_path(@user)
 		else
@@ -22,11 +20,9 @@ class ArticlesController < ApplicationController
 		end
 	end
 
-	def edit
-	end
-
 	def update
-		if @article.update!(article_params)
+		secure_params = { "title" => article_params[:title], "body" => article_params[:body] }
+		if @article.update!(secure_params)
 			redirect_to user_path(@user)
 		else
 			render :edit, status: :unprocessable_entity
@@ -45,20 +41,20 @@ class ArticlesController < ApplicationController
 	
 	def load_user
 		@user = User.where(:id => params[:user_id]).last
-		user_not_exists if !@user.present?
+		user_not_found if !@user.present?
 	end
 
 	def load_article
 		@article = @user.articles.where(:id => params[:id]).last if @user
-		article_not_exists if !@article.present?
+		article_not_found if !@article.present?
 	end
 
-	def article_not_exists
+	def article_not_found
 		redirect_to new_user_article_path, notice:"Article dont Exist, Create new one"
 		return false 
 	end
 
-	def user_not_exists
+	def user_not_found
 		redirect_to new_user_path, notice: "User does not exist. Please Sign Up"
 		return false 
 	end

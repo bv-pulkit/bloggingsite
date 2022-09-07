@@ -3,12 +3,10 @@
 	<p><%= link_to 'Edit Password', edit_password_path(Current.user.id) %></p>
   <%= button_to 'Logout', session_path(Current.user.id), method: :delete,
     form: {
-    data: {
-    turbo_confirm: "Are you sure?"}
-  }%>
+    	data: { turbo_confirm: "Are you sure?" }
+  	} %>
   <p><%= link_to 'My Dashboard', Current.user %></p>
 <% else %>
   <%= link_to 'Sign Up', new_user_path %><br>
-  or<br>
   <%= link_to 'Sign in', new_session_path %>
 <% end %>

@@ -1,9 +1,8 @@
 Rails.application.routes.draw do
 	root "home#index"
 	get 'all_articles', to: 'articles#all_articles'
-	post "/signin", to: "sessions#create", as: "signin"
-	resources :sessions
-	resources :passwords
+	get "/signin", to: "users#new_session"
+	post "/signin", to: "users#create_session"
 	resources :users do
 		resources :articles
 	end

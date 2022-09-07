@@ -1,0 +1,15 @@
+<h1>Sign In</h1>
+
+<%= form_with url: signin_path, method: "POST" do |form| %>
+	<div>
+		<%= form.label :email %><br>
+		<%= form.text_field :email, id: 'email' %>
+	</div>
+	<div>
+		<%= form.label :password %><br>
+		<%= form.text_field :password, id: 'password' %><br>
+	</div>
+	<div>
+		<%= form.submit 'Sign In' %>
+	</div>
+<% end %>

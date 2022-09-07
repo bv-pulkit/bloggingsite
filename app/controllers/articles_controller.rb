@@ -1,12 +1,16 @@
 class ArticlesController < ApplicationController
-	before_action :load_user
-	before_action :load_article, except: [:index, :new, :create]
+	before_action :load_user, except: :all_articles
+	before_action :load_article, except: [:index, :new, :create, :all_articles]
 
 	def index
 		@articles = @user.articles
 	end
 
 	def show
+	end
+
+	def all_articles
+		@article = Article.all
 	end
 
 	def new

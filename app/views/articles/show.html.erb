@@ -1,21 +1,20 @@
 <h1>Article</h1>
 <p>
-	<strong>Title:</strong><br>
-	<	%= @article.title %>
+<strong>Title:</strong><br>
+<%= @article.title %>
 </p>
 <p>
-	<strong>Body:</strong><br>
-	<%= @article.body %>
+<strong>Body:</strong><br>
+<%= @article.body %>
 </p>
-
 <% if current_user == @article.user %>
 	<ul>
-	<li><%= link_to "Edit", edit_user_article_path(current_user.id, @article) %></li>
-	<li><%= button_to "Destroy", user_article_path(current_user.id, @article), 
-		method: :delete,
-		form: {
-		data: {
-		turbo_confirm: "Are you sure?" }
-	}%></li>
+		<li><%= link_to "Edit", edit_user_article_path(current_user.id, @article) %></li>
+		<li><%= button_to "Destroy", user_article_path(current_user.id, @article), 
+			method: :delete,
+				form: {
+					data: { turbo_confirm: "Are you sure?" }
+				} %>
+		</li>
 	</ul>
 <% end %>

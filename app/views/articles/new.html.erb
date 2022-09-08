@@ -1,5 +1,5 @@
 <h2>Add an Article</h2>
-<%= form_with model: [@user, @user.articles.build] do |form| %>
+<%= form_with model: [@user, @article] do |form| %>
 	<p>
 	<%= form.label :title %><br>
 	<%= form.text_field :title %>

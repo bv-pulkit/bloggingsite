@@ -1,4 +1,4 @@
-<%= form_with model: [@user, @user.articles.find(params[:id])] do |form| %>
+<%= form_with model: [@user, @article] do |form| %>
 	<h1><%= params[:id] %> </h1>
 	<div>
 		<%= form.label :title %><br>

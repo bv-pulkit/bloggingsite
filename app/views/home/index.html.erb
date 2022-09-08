@@ -5,7 +5,6 @@
 
 <h2>Articles</h2>
 <ul>
-	<% @articles = Article.all %>
 	<% @articles.each do |article| %>
 		<%= link_to article.title, article %><p></p>
 	<% end %>

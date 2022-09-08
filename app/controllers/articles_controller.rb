@@ -41,7 +41,6 @@ class ArticlesController < ApplicationController
 
 	def load_user
 		@user = current_user
-		#@user = User.where(:id => params[:user_id]).last
 		user_not_found if !@user.present?
 	end
 
